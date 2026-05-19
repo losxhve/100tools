@@ -19,4 +19,77 @@ button.secondary{background:#334155;color:#e2e8f0;}
 .footer{text-align:center;padding:24px 20px;border-top:1px solid #334155;margin-top:24px;}
 .footer .addr{color:#a5b4fc;font-size:12px;cursor:pointer;}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:10px 20px;border-radius:8px;z-index:999;display:none;}
-</style></head><body><div class="container"><div class="header"><h1>倒计时器</h1><div class="sub">设定时间倒计时</div></div><div class='card'><div class='row'><div><label>小时</label><input type='number' id='h' value='0'></div><div><label>分钟</label><input type='number' id='m' value='5'></div><div><label>秒</label><input type='number' id='s' value='0'></div></div><button onclick='startTimer()'>▶ 开始</button><button class='secondary' onclick='pauseTimer()'>⏸ 暂停</button><button class='secondary' onclick='resetTimer()'>🔄 重置</button><div id='timerDisplay' style='font-size:48px;font-weight:700;text-align:center;margin-top:16px;font-family:monospace;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;'>05:00</div></div><script>let timerInt,totalSec=0,rem=0,running=false;function startTimer(){if(running)return;if(rem<=0){const h=parseInt(document.getElementById('h').value)||0,m=parseInt(document.getElementById('m').value)||0,s=parseInt(document.getElementById('s').value)||0;totalSec=h*3600+m*60+s;rem=totalSec;}running=true;timerInt=setInterval(()=>{if(rem<=0){clearInterval(timerInt);running=false;document.getElementById('timerDisplay').textContent='⏰ 时间到！';return;}rem--;updateDisplay();},1000);}function pauseTimer(){clearInterval(timerInt);running=false;}function resetTimer(){clearInterval(timerInt);running=false;rem=0;document.getElementById('timerDisplay').textContent='00:00';}function updateDisplay(){const h=Math.floor(rem/3600);const m=Math.floor((rem%3600)/60);const s=rem%60;document.getElementById('timerDisplay').textContent=(h?String(h).padStart(2,'0')+':':'')+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}</script><div class="footer"><div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div><div class="addr" onclick="navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH').then(()=>{const t=document.getElementById('toast');t.textContent='✅ 地址已复制';t.style.display='block';setTimeout(()=>t.style.display='none',2000);})">USDT (TRC-20): TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</div></div><div class="toast" id="toast"></div></div></body></html>
+</style></head><body><div class="container"><div class="header"><h1>倒计时器</h1><div class="sub">设定时间倒计时</div></div><div class='card'><div class='row'><div><label>小时</label><input type='number' id='h' value='0'></div><div><label>分钟</label><input type='number' id='m' value='5'></div><div><label>秒</label><input type='number' id='s' value='0'></div></div><button onclick='startTimer()'>▶ 开始</button><button class='secondary' onclick='pauseTimer()'>⏸ 暂停</button><button class='secondary' onclick='resetTimer()'>🔄 重置</button><div id='timerDisplay' style='font-size:48px;font-weight:700;text-align:center;margin-top:16px;font-family:monospace;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;'>05:00</div></div><script>let timerInt,totalSec=0,rem=0,running=false;function startTimer(){if(running)return;if(rem<=0){const h=parseInt(document.getElementById('h').value)||0,m=parseInt(document.getElementById('m').value)||0,s=parseInt(document.getElementById('s').value)||0;totalSec=h*3600+m*60+s;rem=totalSec;}running=true;timerInt=setInterval(()=>{if(rem<=0){clearInterval(timerInt);running=false;document.getElementById('timerDisplay').textContent='⏰ 时间到！';return;}rem--;updateDisplay();},1000);}function pauseTimer(){clearInterval(timerInt);running=false;}function resetTimer(){clearInterval(timerInt);running=false;rem=0;document.getElementById('timerDisplay').textContent='00:00';}function updateDisplay(){const h=Math.floor(rem/3600);const m=Math.floor((rem%3600)/60);const s=rem%60;document.getElementById('timerDisplay').textContent=(h?String(h).padStart(2,'0')+':':'')+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}</script><div class="footer"><div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div><div class="addr" onclick="navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH').then(()=>{const t=document.getElementById('toast');t.textContent='✅ 地址已复制';t.style.display='block';setTimeout(()=>t.style.display='none',2000);})">USDT (TRC-20): TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</div></div><div class="toast" id="toast"></div></div>
+<style>
+.pay-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px);}
+.pay-modal{background:#1e293b;border-radius:16px;padding:32px;max-width:420px;width:90%;border:1px solid #3b82f6;text-align:center;}
+.pay-modal h2{font-size:22px;margin-bottom:8px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.pay-modal .price{font-size:48px;font-weight:700;margin:16px 0;color:#22c55e;}
+.pay-modal .price span{font-size:16px;color:#94a3b8;}
+.pay-modal .addr-box{background:#0f172a;border-radius:8px;padding:12px;margin:12px 0;word-break:break-all;cursor:pointer;border:1px solid #334155;}
+.pay-modal .addr-box code{color:#a5b4fc;font-size:13px;}
+.pay-modal .addr-box:hover{border-color:#3b82f6;}
+.pay-modal .hint{color:#64748b;font-size:12px;margin:8px 0;}
+.pay-modal input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:14px;outline:none;margin:8px 0;}
+.pay-modal input:focus{border-color:#22c55e;}
+.pay-modal .btn-pay{background:#22c55e;color:white;padding:12px 32px;border-radius:8px;border:none;font-size:16px;font-weight:700;cursor:pointer;width:100%;}
+.pay-modal .btn-pay:hover{background:#16a34a;}
+.pay-modal .skip{color:#475569;font-size:12px;cursor:pointer;margin-top:12px;display:inline-block;}
+.pay-modal .skip:hover{color:#64748b;}
+.pay-modal .paid{color:#22c55e;font-size:16px;font-weight:600;}
+</style>
+<div class="pay-overlay" id="payOverlay">
+<div class="pay-modal">
+<h2>🔒 付费工具</h2>
+<p style="color:#94a3b8;font-size:14px;margin:8px 0;">支付 $1 解锁使用</p>
+<div class="price">$1 <span>USDT</span></div>
+<p style="color:#94a3b8;font-size:13px;">请转账到以下地址（TRC-20）</p>
+<div class="addr-box" onclick="copyPayAddr()">
+<code id="payAddr">TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</code><br>
+<span style="color:#475569;font-size:11px;">点击复制地址</span>
+</div>
+<div class="hint">转账后，粘贴交易哈希验证</div>
+<input type="text" id="txHash" placeholder="输入交易哈希 TxHash...">
+<button class="btn-pay" onclick="verifyPayment()">✅ 验证并解锁</button>
+<a class="skip" onclick="skipPay()">以后再说</a>
+</div>
+</div>
+<script>
+(function(){
+  const key = '_paid_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
+  if(localStorage.getItem(key) === 'true') return; // already paid
+  
+  function showPayWall() {
+    document.getElementById('payOverlay').style.display = 'flex';
+  }
+  
+  window.copyPayAddr = function() {
+    navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH');
+    const t = document.querySelector('.addr-box code');
+    const orig = t.textContent;
+    t.textContent = '✅ 已复制';
+    setTimeout(() => t.textContent = orig, 2000);
+  };
+  
+  window.verifyPayment = function() {
+    const tx = document.getElementById('txHash').value.trim();
+    if (!tx || tx.length < 10) {
+      alert('请输入有效的交易哈希');
+      return;
+    }
+    // Store payment locally (honor system + tx hash record)
+    localStorage.setItem(key, 'true');
+    localStorage.setItem(key + '_tx', tx);
+    localStorage.setItem(key + '_time', Date.now().toString());
+    document.getElementById('payOverlay').style.display = 'none';
+  };
+  
+  window.skipPay = function() {
+    document.getElementById('payOverlay').style.display = 'none';
+  };
+  
+  showPayWall();
+})();
+</script>
+
+</body></html>
