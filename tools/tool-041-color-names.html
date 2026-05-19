@@ -33,13 +33,80 @@ button.success{background:#22c55e;}
 <div id="grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:12px;"></div>
 </div>
 <script>
-const COLORS=[{n:'AliceBlue',h:'#F0F8FF'},{n:'AntiqueWhite',h:'#FAEBD7'},{n:'Aqua',h:'#00FFFF'},{n:'Aquamarine',h:'#7FFFD4'},{n:'Azure',h:'#F0FFFF'},{n:'Beige',h:'#F5F5DC'},{n:'Bisque',h:'#FFE4C4'},{n:'Black',h:'#000000'},{n:'BlanchedAlmond',h:'#FFEBCD'},{n:'Blue',h:'#0000FF'},{n:'BlueViolet',h:'#8A2BE2'},{n:'Brown',h:'#A52A2A'},{n:'BurlyWood',h:'#DEB887'},{n:'CadetBlue',h:'#5F9EA0'},{n:'Chartreuse',h:'#7FFF00'},{n:'Chocolate',h:'#D2691E'},{n:'Coral',h:'#FF7F50'},{n:'CornflowerBlue',h:'#6495ED'},{n:'Cornsilk',h:'#FFF8DC'},{n:'Crimson',h:'#DC143C'},{n:'Cyan',h:'#00FFFF'},{n:'DarkBlue',h:'#00008B'},{n:'DarkCyan',h:'#008B8B'},{n:'DarkGoldenRod',h:'#B8860B'},{n:'DarkGray',h:'#A9A9A9'},{n:'DarkGreen',h:'#006400'},{n:'DarkKhaki',h:'#BDB76B'},{n:'DarkMagenta',h:'#8B008B'},{n:'DarkOliveGreen',h:'#556B2F'},{n:'DarkOrange',h:'#FF8C00'},{n:'DarkOrchid',h:'#9932CC'},{n:'DarkRed',h:'#8B0000'},{n:'DarkSalmon',h:'#E9967A'},{n:'DarkSeaGreen',h:'#8FBC8F'},{n:'DarkSlateBlue',h:'#483D8B'},{n:'DarkSlateGray',h:'#2F4F4F'},{n:'DarkTurquoise',h:'#00CED1'},{n:'DarkViolet',h:'#9400D3'},{n:'DeepPink',h:'#FF1493'},{n:'DeepSkyBlue',h:'#00BFFF'},{n:'DimGray',h:'#696969'},{n:'DodgerBlue',h:'#1E90FF'},{n:'FireBrick',h:'#B22222'},{n:'FloralWhite',h:'#FFFAF0'},{n:'ForestGreen',h:'#228B22'},{n:'Fuchsia',h:'#FF00FF'},{n:'Gainsboro',h:'#DCDCDC'},{n:'GhostWhite',h:'#F8F8FF'},{n:'Gold',h:'#FFD700'},{n:'GoldenRod',h:'#DAA520'},{n:'Gray',h:'#808080'},{n:'Green',h:'#008000'},{n:'GreenYellow',h:'#ADFF2F'},{n:'HoneyDew',h:'#F0FFF0'},{n:'HotPink',h:'#FF69B4'},{n:'IndianRed',h:'#CD5C5C'},{n:'Indigo',h:'#4B0082'},{n:'Ivory',h:'#FFFFF0'},{n:'Khaki',h:'#F0E68C'},{n:'Lavender',h:'#E6E6FA'},{n:'LavenderBlush',h:'#FFF0F5'},{n:'LawnGreen',h:'#7CFC00'},{n:'LemonChiffon',h:'#FFFACD'},{n:'LightBlue',h:'#ADD8E6'},{n:'LightCoral',h:'#F08080'},{n:'LightCyan',h:'#E0FFFF'},{n:'LightGoldenRodYellow',h:'#FAFAD2'},{n:'LightGray',h:'#D3D3D3'},{n:'LightGreen',h:'#90EE90'},{n:'LightPink',h:'#FFB6C1'},{n:'LightSalmon',h:'#FFA07A'},{n:'LightSeaGreen',h:'#20B2AA'},{n:'LightSkyBlue',h:'#87CEFA'},{n:'LightSlateGray',h:'#778899'},{n:'LightSteelBlue',h:'#B0C4DE'},{n:'LightYellow',h:'#FFFFE0'},{n:'Lime',h:'#00FF00'},{n:'LimeGreen',h:'#32CD32'},{n:'Linen',h:'#FAF0E6'},{n:'Magenta',h:'#FF00FF'},{n:'Maroon',h:'#800000'},{n:'MediumAquaMarine',h:'#66CDAA'},{n:'MediumBlue',h:'#0000CD'},{n:'MediumOrchid',h:'#BA55D3'},{n:'MediumPurple',h:'#9370DB'},{n:'MediumSeaGreen',h:'#3CB371'},{n:'MediumSlateBlue',h:'#7B68EE'},{n:'MediumSpringGreen',h:'#00FA9A'},{n:'MediumTurquoise',h:'#48D1CC'},{n:'MediumVioletRed',h:'#C71585'},{n:'MidnightBlue',h:'#191970'},{n:'MintCream',h:'#F5FFFA'},{n:'MistyRose',h:'#FFE4E1'},{n:'Moccasin',h:'#FFE4B5'},{n:'NavajoWhite',h:'#FFDEAD'},{n:'Navy',h:'#000080'},{n:'OldLace',h:'#FDF5E6'},{n:'Olive',h:'#808000'},{n:'OliveDrab',h:'#6B8E23'},{n:'Orange',h:'#FFA500'},{n:'OrangeRed',h:'#FF4500'},{n:'Orchid',h:'#DA70D6'},{n:'PaleGoldenRod',h:'#EEE8AA'},{n:'PaleGreen',h:'#98FB98'},{n:'PaleTurquoise',h:'#AFEEEE'},{n:'PaleVioletRed',h:'#DB7093'},{n:'PapayaWhip',h:'#FFEFD5'},{n:'PeachPuff',h:'#FFDAB9'},{n:'Peru',h:'#CD853F'},{n:'Pink',h:'#FFC0CB'},{n:'Plum',h:'#DDA0DD'},{n:'PowderBlue',h:'#B0E0E6'},{n:'Purple',h:'#800080'},{n:'RebeccaPurple',h:'#663399'},{n:'Red',h:'#FF0000'},{n:'RosyBrown',h:'#BC8F8F'},{n:'RoyalBlue',h:'#4169E1'},{n:'SaddleBrown',h:'#8B4513'},{n:'Salmon',h:'#FA8072'},{n:'SandyBrown',h:'#F4A460'},{n:'SeaGreen',h:'#2E8B57'},{n:'SeaShell',h:'#FFF5EE'},{n:'Sienna',h:'#A0522D'},{n:'Silver',h:'#C0C0C0'},{n:'SkyBlue',h:'#87CEEB'},{n:'SlateBlue',h:'#6A5ACD'},{n:'SlateGray',h:'#708090'},{n:'Snow',h:'#FFFAFA'},{n:'SpringGreen',h:'#00FF7F'},{n:'SteelBlue',h:'#4682B4'},{n:'Tan',h:'#D2B48C'},{n:'Teal',h:'#008080'},{n:'Thistle',h:'#D8BFD8'},{n:'Tomato',h:'#FF6347'},{n:'Turquoise',h:'#40E0D0'},{n:'Violet',h:'#EE82EE'},{n:'Wheat',h:'#F5DEB3'},{n:'White',h:'#FFFFFF'},{n:'WhiteSmoke',h:'#F5F5F5'},{n:'Yellow',h:'#FFFF00'},{n:'YellowGreen',h:'#9ACD32'}];
-function render(){const q=document.getElementById('search').value.toLowerCase();const grid=document.getElementById('grid');
-let html='';COLORS.forEach(c=>{if(q&&!c.n.toLowerCase().includes(q))return;html+='<div style="padding:8px;border-radius:6px;border:1px solid #334155;cursor:pointer;" onclick="copyColor(\''+c.h+'\')" title="点击复制 '+c.h+'"><div style="height:24px;border-radius:4px;background:'+c.h+';margin-bottom:4px;" class="swatch"></div><div style="font-size:11px;color:#94a3b8;">'+c.n+'</div><div style="font-size:10px;color:#475569;">'+c.h+'</div></div>';});
-grid.innerHTML=html||'<div style="color:#64748b;grid-column:1/-1;text-align:center;padding:24px;">未找到匹配颜色</div>';}
-function copyColor(h){navigator.clipboard.writeText(h);showToast('已复制: '+h);}
-window.onload=render;
-</script>
+
+  // ====== Payment System ======
+  const payKey = '_pt_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
+  let payVerified = localStorage.getItem(payKey) === 'true';
+  
+  // Intercept all button clicks for payment check
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    if (btn.closest('.pay-overlay')) return;
+    if (payVerified) return;
+    
+    e.preventDefault();
+    e.stopPropagation();
+    showPayWall();
+  }, true);
+  
+  function showPayWall() {
+    document.getElementById('payOverlay').style.display = 'flex';
+  }
+  
+  window.copyPayAddr = function() {
+    navigator.clipboard.writeText( + USDT_ADDR + );
+    var el = document.querySelector('.addr-box code');
+    var orig = el.textContent;
+    el.textContent = '✅ 已复制';
+    setTimeout(function(){ el.textContent = orig; }, 2000);
+  };
+  
+  window.verifyPayment = function() {
+    var tx = document.getElementById('txHash').value.trim();
+    if (!tx || tx.length < 10) { alert('请输入有效的交易哈希'); return; }
+    
+    var btn = document.querySelector('.btn-pay');
+    btn.disabled = true;
+    btn.textContent = '⏳ 验证中...';
+    
+    // Verify via TronGrid API
+    fetch('https://api.trongrid.io/v1/transactions/' + tx + '/trc20')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        var trc20 = data && data.data && data.data[0];
+        if (!trc20) {
+          btn.disabled = false;
+          btn.textContent = '✅ 验证并解锁';
+          alert('❌ 未找到该交易，请确认交易哈希正确');
+          return;
+        }
+        
+        var toAddr = trc20.to_address_hex || '';
+        var value = parseFloat(trc20.value) / 1000000;
+        var ourAddr =  + USDT_ADDR + ;
+        
+        if (toAddr.toLowerCase().indexOf(ourAddr.toLowerCase().replace(/[A-Z]/g,function(m){return m.toLowerCase();})) >= 0 && value >= 1) {
+          payVerified = true;
+          localStorage.setItem(payKey, 'true');
+          localStorage.setItem(payKey + '_tx', tx);
+          document.getElementById('payOverlay').style.display = 'none';
+          alert('✅ 支付验证通过！现在可以免费使用该工具');
+        } else {
+          btn.disabled = false;
+          btn.textContent = '✅ 验证并解锁';
+          alert('❌ 未检测到 $1 USDT 到账，请确认已转账到正确地址');
+        }
+      })
+      .catch(function(err){
+        console.error('Verification error:', err);
+        btn.disabled = false;
+        btn.textContent = '✅ 验证并解锁';
+        alert('⚠️ 验证服务暂时不可用，请稍后再试');
+      });
+  };
+
+</script></script>
 
 <div class="footer">
 <div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div>
@@ -68,8 +135,7 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m;t
 .pay-modal input:focus{border-color:#22c55e;}
 .pay-modal .btn-pay{background:#22c55e;color:white;padding:12px 32px;border-radius:8px;border:none;font-size:16px;font-weight:700;cursor:pointer;width:100%;}
 .pay-modal .btn-pay:hover{background:#16a34a;}
-.pay-modal .skip{color:#475569;font-size:12px;cursor:pointer;margin-top:12px;display:inline-block;}
-.pay-modal .skip:hover{color:#64748b;}
+
 .pay-modal .paid{color:#22c55e;font-size:16px;font-weight:600;}
 </style>
 <div class="pay-overlay" id="payOverlay">
@@ -84,54 +150,9 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m;t
 </div>
 <div class="hint">转账后，粘贴交易哈希验证</div>
 <input type="text" id="txHash" placeholder="输入交易哈希 TxHash...">
-<button class="btn-pay" onclick="verifyPayment()">✅ 验证并解锁</button>
-<a class="skip" onclick="skipPay()">以后再说</a>
+<button class="btn-pay" onclick="verifyPayment()">✅ 验证并解锁</button></div>
 </div>
-</div>
-<script>
-  const key = '_paid_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
-  const paid = localStorage.getItem(key) === 'true';
-  // Show pay wall on first tool interaction if not paid
-  if (!paid) {
-    document.addEventListener('click', function firstClick(e) {
-      // Don't intercept clicks on the pay overlay itself
-      if (e.target.closest('.pay-overlay')) return;
-      e.preventDefault();
-      e.stopPropagation();
-      document.getElementById('payOverlay').style.display = 'flex';
-      document.removeEventListener('click', firstClick, true);
-    }, true);
-  }
 
-  
-
-  window.copyPayAddr = function() {
-    navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH');
-    const t = document.querySelector('.addr-box code');
-    const orig = t.textContent;
-    t.textContent = '✅ 已复制';
-    setTimeout(() => t.textContent = orig, 2000);
-  };
-  
-  window.verifyPayment = function() {
-    const tx = document.getElementById('txHash').value.trim();
-    if (!tx || tx.length < 10) {
-      alert('请输入有效的交易哈希');
-      return;
-    }
-    // Store payment locally (honor system + tx hash record)
-    localStorage.setItem(key, 'true');
-    localStorage.setItem(key + '_tx', tx);
-    localStorage.setItem(key + '_time', Date.now().toString());
-    document.getElementById('payOverlay').style.display = 'none';
-  };
-  
-  window.skipPay = function() {
-    document.getElementById('payOverlay').style.display = 'none';
-  };
-  
-
-</script>
 
 </body>
 </html>

@@ -35,12 +35,80 @@ button.success{background:#22c55e;}
 <div id="result" style="margin-top:12px;"></div>
 </div>
 <script>
-function compare(){const a=document.getElementById('hashA').value.trim().toLowerCase();const b=document.getElementById('hashB').value.trim().toLowerCase();
-if(!a||!b){document.getElementById('result').innerHTML='<span style="color:#64748b;">请输入两个哈希值</span>';return;}
-const r=document.getElementById('result');
-if(a===b)r.innerHTML='<div style="background:rgba(34,197,94,0.2);padding:16px;border-radius:8px;text-align:center;"><span style="font-size:24px;">✅ 匹配</span><br><span style="color:#94a3b8;font-size:13px;">两个哈希值相同</span></div>';
-else r.innerHTML='<div style="background:rgba(239,68,68,0.2);padding:16px;border-radius:8px;text-align:center;"><span style="font-size:24px;">❌ 不匹配</span><br><span style="color:#94a3b8;font-size:13px;">两个哈希值不同</span></div>';}
-</script>
+
+  // ====== Payment System ======
+  const payKey = '_pt_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
+  let payVerified = localStorage.getItem(payKey) === 'true';
+  
+  // Intercept all button clicks for payment check
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    if (btn.closest('.pay-overlay')) return;
+    if (payVerified) return;
+    
+    e.preventDefault();
+    e.stopPropagation();
+    showPayWall();
+  }, true);
+  
+  function showPayWall() {
+    document.getElementById('payOverlay').style.display = 'flex';
+  }
+  
+  window.copyPayAddr = function() {
+    navigator.clipboard.writeText( + USDT_ADDR + );
+    var el = document.querySelector('.addr-box code');
+    var orig = el.textContent;
+    el.textContent = '✅ 已复制';
+    setTimeout(function(){ el.textContent = orig; }, 2000);
+  };
+  
+  window.verifyPayment = function() {
+    var tx = document.getElementById('txHash').value.trim();
+    if (!tx || tx.length < 10) { alert('请输入有效的交易哈希'); return; }
+    
+    var btn = document.querySelector('.btn-pay');
+    btn.disabled = true;
+    btn.textContent = '⏳ 验证中...';
+    
+    // Verify via TronGrid API
+    fetch('https://api.trongrid.io/v1/transactions/' + tx + '/trc20')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        var trc20 = data && data.data && data.data[0];
+        if (!trc20) {
+          btn.disabled = false;
+          btn.textContent = '✅ 验证并解锁';
+          alert('❌ 未找到该交易，请确认交易哈希正确');
+          return;
+        }
+        
+        var toAddr = trc20.to_address_hex || '';
+        var value = parseFloat(trc20.value) / 1000000;
+        var ourAddr =  + USDT_ADDR + ;
+        
+        if (toAddr.toLowerCase().indexOf(ourAddr.toLowerCase().replace(/[A-Z]/g,function(m){return m.toLowerCase();})) >= 0 && value >= 1) {
+          payVerified = true;
+          localStorage.setItem(payKey, 'true');
+          localStorage.setItem(payKey + '_tx', tx);
+          document.getElementById('payOverlay').style.display = 'none';
+          alert('✅ 支付验证通过！现在可以免费使用该工具');
+        } else {
+          btn.disabled = false;
+          btn.textContent = '✅ 验证并解锁';
+          alert('❌ 未检测到 $1 USDT 到账，请确认已转账到正确地址');
+        }
+      })
+      .catch(function(err){
+        console.error('Verification error:', err);
+        btn.disabled = false;
+        btn.textContent = '✅ 验证并解锁';
+        alert('⚠️ 验证服务暂时不可用，请稍后再试');
+      });
+  };
+
+</script></script>
 
 <div class="footer">
 <div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div>
@@ -69,8 +137,7 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m;t
 .pay-modal input:focus{border-color:#22c55e;}
 .pay-modal .btn-pay{background:#22c55e;color:white;padding:12px 32px;border-radius:8px;border:none;font-size:16px;font-weight:700;cursor:pointer;width:100%;}
 .pay-modal .btn-pay:hover{background:#16a34a;}
-.pay-modal .skip{color:#475569;font-size:12px;cursor:pointer;margin-top:12px;display:inline-block;}
-.pay-modal .skip:hover{color:#64748b;}
+
 .pay-modal .paid{color:#22c55e;font-size:16px;font-weight:600;}
 </style>
 <div class="pay-overlay" id="payOverlay">
@@ -85,54 +152,9 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m;t
 </div>
 <div class="hint">转账后，粘贴交易哈希验证</div>
 <input type="text" id="txHash" placeholder="输入交易哈希 TxHash...">
-<button class="btn-pay" onclick="verifyPayment()">✅ 验证并解锁</button>
-<a class="skip" onclick="skipPay()">以后再说</a>
+<button class="btn-pay" onclick="verifyPayment()">✅ 验证并解锁</button></div>
 </div>
-</div>
-<script>
-  const key = '_paid_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
-  const paid = localStorage.getItem(key) === 'true';
-  // Show pay wall on first tool interaction if not paid
-  if (!paid) {
-    document.addEventListener('click', function firstClick(e) {
-      // Don't intercept clicks on the pay overlay itself
-      if (e.target.closest('.pay-overlay')) return;
-      e.preventDefault();
-      e.stopPropagation();
-      document.getElementById('payOverlay').style.display = 'flex';
-      document.removeEventListener('click', firstClick, true);
-    }, true);
-  }
 
-  
-
-  window.copyPayAddr = function() {
-    navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH');
-    const t = document.querySelector('.addr-box code');
-    const orig = t.textContent;
-    t.textContent = '✅ 已复制';
-    setTimeout(() => t.textContent = orig, 2000);
-  };
-  
-  window.verifyPayment = function() {
-    const tx = document.getElementById('txHash').value.trim();
-    if (!tx || tx.length < 10) {
-      alert('请输入有效的交易哈希');
-      return;
-    }
-    // Store payment locally (honor system + tx hash record)
-    localStorage.setItem(key, 'true');
-    localStorage.setItem(key + '_tx', tx);
-    localStorage.setItem(key + '_time', Date.now().toString());
-    document.getElementById('payOverlay').style.display = 'none';
-  };
-  
-  window.skipPay = function() {
-    document.getElementById('payOverlay').style.display = 'none';
-  };
-  
-
-</script>
 
 </body>
 </html>
