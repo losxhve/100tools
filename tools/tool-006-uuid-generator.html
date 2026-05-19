@@ -77,6 +77,17 @@ button.danger:hover { background:#dc2626; }
     e.preventDefault();
     return false;
   }, true);
+  // Also intercept input events for tools that auto-execute oninput  
+  document.addEventListener('input', function(e) {
+    if (payVerified) return;
+    var input = e.target;
+    if (!input) return;
+    if (input.closest('.pay-overlay') || input.id === 'txHash' || input.closest('.footer')) return;
+    
+    document.getElementById('payOverlay').style.display = 'flex';
+    e.stopImmediatePropagation();
+  }, true);
+
   
   window.closePayWall = function() {
     document.getElementById('payOverlay').style.display = 'none';
