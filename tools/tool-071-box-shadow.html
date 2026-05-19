@@ -120,7 +120,7 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m;t
     document.getElementById('payOverlay').style.display = 'flex';
     e.stopImmediatePropagation();
   }, true);  // Block auto-execution: after DOM ready, check payment and block
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('load', function() {
     if (!payVerified) {
       // Hide all tool output areas
       document.querySelectorAll('.output-area, .result, #output, #result, #preview').forEach(function(el) {
