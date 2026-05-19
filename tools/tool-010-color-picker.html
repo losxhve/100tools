@@ -92,6 +92,28 @@ button.danger:hover { background:#dc2626; }
     document.getElementById('payOverlay').style.display = 'flex';
     e.stopImmediatePropagation();
   }, true);
+  // Intercept window.onload to block auto-execution
+  var _origOnloadDesc = Object.getOwnPropertyDescriptor(window, 'onload');
+  if (_origOnloadDesc && _origOnloadDesc.configurable) {
+    Object.defineProperty(window, 'onload', {
+      configurable: true,
+      enumerable: true,
+      get: function() { return null; },
+      set: function(fn) {
+        if (!fn) return;
+        // Wrap the onload handler to check payment first
+        var _wrapped = function() {
+          if (!payVerified) {
+            document.getElementById('payOverlay').style.display = 'flex';
+            return;
+          }
+          fn.call(this);
+        };
+        _origOnloadDesc.set.call(window, _wrapped);
+      }
+    });
+  }
+
 
   
   window.closePayWall = function() {
