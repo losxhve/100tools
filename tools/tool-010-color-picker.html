@@ -88,7 +88,7 @@ button.danger:hover { background:#dc2626; }
   };
   
   window.copyPayAddr = function() {
-    navigator.clipboard.writeText( + USDT_ADDR + );
+    navigator.clipboard.writeText("TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH");
     var el = document.querySelector('.addr-box code');
     var orig = el.textContent;
     el.textContent = '✅ 已复制';
@@ -129,7 +129,7 @@ button.danger:hover { background:#dc2626; }
           btn.disabled = false;
           btn.textContent = '✅ 验证并解锁';
           alert('❌ 未检测到 $1 USDT 到账
-请确认已转账到地址: ' +  + USDT_ADDR + );
+请确认已转账到地址: TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH');
         }
       })
       .catch(function(err){
