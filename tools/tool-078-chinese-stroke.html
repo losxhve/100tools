@@ -87,14 +87,22 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m;t
 </div>
 </div>
 <script>
-(function(){
   const key = '_paid_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
-  if(localStorage.getItem(key) === 'true') return; // already paid
-  
-  function showPayWall() {
-    document.getElementById('payOverlay').style.display = 'flex';
+  const paid = localStorage.getItem(key) === 'true';
+  // Show pay wall on first tool interaction if not paid
+  if (!paid) {
+    document.addEventListener('click', function firstClick(e) {
+      // Don't intercept clicks on the pay overlay itself
+      if (e.target.closest('.pay-overlay')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('payOverlay').style.display = 'flex';
+      document.removeEventListener('click', firstClick, true);
+    }, true);
   }
+
   
+
   window.copyPayAddr = function() {
     navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH');
     const t = document.querySelector('.addr-box code');
@@ -120,8 +128,7 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m;t
     document.getElementById('payOverlay').style.display = 'none';
   };
   
-  showPayWall();
-})();
+
 </script>
 
 </body>

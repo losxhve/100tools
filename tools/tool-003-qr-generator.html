@@ -73,7 +73,7 @@ function copyAddr() {
 <script>
 let toastTimer;
 function showToast(msg) {
-  const t = document.getElementById('toast') || (()=>{const e=document.createElement('div');e.className='toast';e.id='toast';document.body.appendChild(e);return e;})();
+  const t = document.getElementById('toast') || (()=>{const e=document.createElement('div');e.className='toast';e.id='toast';document.body.appendChild(e);return e;
   t.textContent = msg; t.style.display = 'block';
   clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.style.display='none',2000);
 }
@@ -123,14 +123,22 @@ function generate() {
 </div>
 </div>
 <script>
-(function(){
   const key = '_paid_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
-  if(localStorage.getItem(key) === 'true') return; // already paid
-  
-  function showPayWall() {
-    document.getElementById('payOverlay').style.display = 'flex';
+  const paid = localStorage.getItem(key) === 'true';
+  // Show pay wall on first tool interaction if not paid
+  if (!paid) {
+    document.addEventListener('click', function firstClick(e) {
+      // Don't intercept clicks on the pay overlay itself
+      if (e.target.closest('.pay-overlay')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('payOverlay').style.display = 'flex';
+      document.removeEventListener('click', firstClick, true);
+    }, true);
   }
+
   
+
   window.copyPayAddr = function() {
     navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH');
     const t = document.querySelector('.addr-box code');
@@ -156,8 +164,7 @@ function generate() {
     document.getElementById('payOverlay').style.display = 'none';
   };
   
-  showPayWall();
-})();
+
 </script>
 
 </body>
