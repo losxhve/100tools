@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>HTML压缩 - 100 Tools</title><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column;}.container{max-width:720px;margin:0 auto;padding:24px 20px;flex:1;width:100%;}.header{text-align:center;margin-bottom:24px;}.header h1{font-size:24px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}.header .sub{color:#64748b;font-size:13px;}.card{background:#1e293b;border-radius:12px;padding:24px;border:1px solid #334155;margin-bottom:16px;}label{display:block;font-size:13px;color:#94a3b8;margin-bottom:6px;font-weight:600;}textarea,input,select{width:100%;padding:10px 14px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:14px;outline:none;margin-bottom:12px;}textarea:focus,input:focus,select:focus{border-color:#3b82f6;}textarea{min-height:120px;resize:vertical;font-family:monospace;}button{padding:10px 24px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;background:#3b82f6;color:white;margin-right:8px;margin-bottom:8px;}button:hover{background:#2563eb;}button.secondary{background:#334155;color:#e2e8f0;}.row{display:flex;gap:12px;flex-wrap:wrap;}.row>*{flex:1;min-width:150px;}.output-area{background:#0f172a;border-radius:8px;padding:14px;margin-top:12px;font-family:monospace;font-size:14px;white-space:pre-wrap;word-break:break-all;border:1px solid #334155;min-height:40px;color:#22c55e;}.footer{text-align:center;padding:24px 20px;border-top:1px solid #334155;margin-top:24px;}.footer .addr{color:#a5b4fc;font-size:12px;cursor:pointer;}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:10px 20px;border-radius:8px;z-index:999;display:none;}</style></head><body><div class="container"><div class="header"><h1>HTML压缩</h1><div class="sub">压缩HTML代码移除多余空格</div></div><div class="card"><label>输入HTML</label><textarea id="html" oninput="minify()"><div class="test">  Hello   World  </div></textarea><div class="output-area" id="output"></div><button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('output').textContent);showToast('已复制')">📋 复制</button></div><script>function minify(){const t=document.getElementById('html').value;document.getElementById('output').textContent=t.replace(/\s{2,}/g,' ').replace(/>\s+</g,'><').replace(/\s+>/g,'>').replace(/<\s+/g,'<').trim();}</script><div class="footer"><div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div><div class="addr" onclick="navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH').then(()=>{const t=document.getElementById('toast');t.textContent='✅ 地址已复制';t.style.display='block';setTimeout(()=>t.style.display='none',2000);})">USDT (TRC-20): TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</div></div><div class="toast" id="toast"></div></div>
 <style>
-.pay-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px);}
-.pay-modal{background:#1e293b;border-radius:16px;padding:32px;max-width:420px;width:90%;border:1px solid #3b82f6;text-align:center;}
+.pay-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px);}.close-pay{position:absolute;top:12px;right:12px;background:transparent;border:none;color:#64748b;font-size:20px;cursor:pointer;padding:4px 8px;margin:0;line-height:1;}.close-pay:hover{color:#e2e8f0;background:#334155;border-radius:4px;}
+.pay-modal{background:#1e293b;border-radius:16px;padding:32px;max-width:420px;width:90%;border:1px solid #3b82f6;text-align:center;position:relative;}
 .pay-modal h2{font-size:22px;margin-bottom:8px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .pay-modal .price{font-size:48px;font-weight:700;margin:16px 0;color:#22c55e;}
 .pay-modal .price span{font-size:16px;color:#94a3b8;}
@@ -19,6 +19,7 @@
 <div class="pay-overlay" id="payOverlay">
 <div class="pay-modal">
 <h2>🔒 付费工具</h2>
+<button class="close-pay" onclick="closePayWall()">✕</button>
 <p style="color:#94a3b8;font-size:14px;margin:8px 0;">支付 $1 解锁使用</p>
 <div class="price">$1 <span>USDT</span></div>
 <p style="color:#94a3b8;font-size:13px;">请转账到以下地址（TRC-20）</p>
@@ -32,25 +33,27 @@
 </div>
 <script>
 
-  // ====== Payment System ======
-  const payKey = '_pt_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
-  let payVerified = localStorage.getItem(payKey) === 'true';
   
-  // Intercept all button clicks for payment check
+  // ====== Payment System ======
+  var payKey = '_pt_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
+  var payVerified = localStorage.getItem(payKey) === 'true';
+  
+  // Always intercept action buttons in capture phase
   document.addEventListener('click', function(e) {
     var btn = e.target.closest('button');
-    if (!btn) return;
+    if (!btn || payVerified) return;
     if (btn.closest('.pay-overlay')) return;
-    if (payVerified) return;
     
+    // Show pay wall and STOP the button action completely
+    document.getElementById('payOverlay').style.display = 'flex';
+    e.stopImmediatePropagation();
     e.preventDefault();
-    e.stopPropagation();
-    showPayWall();
+    return false;
   }, true);
   
-  function showPayWall() {
-    document.getElementById('payOverlay').style.display = 'flex';
-  }
+  window.closePayWall = function() {
+    document.getElementById('payOverlay').style.display = 'none';
+  };
   
   window.copyPayAddr = function() {
     navigator.clipboard.writeText( + USDT_ADDR + );
@@ -68,7 +71,7 @@
     btn.disabled = true;
     btn.textContent = '⏳ 验证中...';
     
-    // Verify via TronGrid API
+    // Verify via TronGrid blockchain API
     fetch('https://api.trongrid.io/v1/transactions/' + tx + '/trc20')
       .then(function(r){ return r.json(); })
       .then(function(data){
@@ -80,11 +83,11 @@
           return;
         }
         
-        var toAddr = trc20.to_address_hex || '';
+        var toAddr = (trc20.to_address_hex || '').toLowerCase();
+        var ourAddr = 'T' + 'BzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH'.toLowerCase();
         var value = parseFloat(trc20.value) / 1000000;
-        var ourAddr =  + USDT_ADDR + ;
         
-        if (toAddr.toLowerCase().indexOf(ourAddr.toLowerCase().replace(/[A-Z]/g,function(m){return m.toLowerCase();})) >= 0 && value >= 1) {
+        if (toAddr.indexOf('tbzebcdaegvs2flnw7wjhu19rquavpfhh') >= 0 && value >= 1) {
           payVerified = true;
           localStorage.setItem(payKey, 'true');
           localStorage.setItem(payKey + '_tx', tx);
@@ -93,7 +96,8 @@
         } else {
           btn.disabled = false;
           btn.textContent = '✅ 验证并解锁';
-          alert('❌ 未检测到 $1 USDT 到账，请确认已转账到正确地址');
+          alert('❌ 未检测到 $1 USDT 到账
+请确认已转账到地址: ' +  + USDT_ADDR + );
         }
       })
       .catch(function(err){

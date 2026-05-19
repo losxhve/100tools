@@ -21,8 +21,8 @@ button.secondary{background:#334155;color:#e2e8f0;}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:10px 20px;border-radius:8px;z-index:999;display:none;}
 </style></head><body><div class="container"><div class="header"><h1>GPA计算器</h1><div class="sub">计算学分绩点</div></div><div class='card'><label>输入课程（格式：学分,成绩）每行一门</label><textarea id='courses'>4,85\n3,92\n2,78\n3,88</textarea><button onclick='calcGPA()'>计算GPA</button><div class='output-area' id='output'></div></div><script>function calcGPA(){const lines=document.getElementById('courses').value.split('\n').filter(Boolean);let totalCredits=0,totalPoints=0;let html='<table style="width:100%;font-size:13px;"><tr style="color:#94a3b8;"><th style="padding:6px;text-align:left;">学分</th><th style="padding:6px;text-align:left;">成绩</th><th style="padding:6px;text-align:left;">绩点</th></tr>';lines.forEach(line=>{const[cred,score]=line.split(',').map(Number);if(isNaN(cred)||isNaN(score))return;let gp;if(score>=90)gp=4.0;else if(score>=85)gp=3.7;else if(score>=82)gp=3.3;else if(score>=78)gp=3.0;else if(score>=75)gp=2.7;else if(score>=72)gp=2.3;else if(score>=68)gp=2.0;else if(score>=64)gp=1.5;else if(score>=60)gp=1.0;else gp=0;totalCredits+=cred;totalPoints+=cred*gp;html+='<tr><td style="padding:4px;border-bottom:1px solid #1e293b;">'+cred+'</td><td style="padding:4px;border-bottom:1px solid #1e293b;">'+score+'</td><td style="padding:4px;border-bottom:1px solid #1e293b;">'+gp.toFixed(1)+'</td></tr>';});const gpa=totalPoints/totalCredits;html+='</table><div style="margin-top:12px;font-size:18px;">GPA: <strong style="color:#22c55e;">'+gpa.toFixed(3)+'</strong></div>';document.getElementById('output').innerHTML=html;}</script><div class="footer"><div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div><div class="addr" onclick="navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH').then(()=>{const t=document.getElementById('toast');t.textContent='✅ 地址已复制';t.style.display='block';setTimeout(()=>t.style.display='none',2000);})">USDT (TRC-20): TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</div></div><div class="toast" id="toast"></div></div>
 <style>
-.pay-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px);}
-.pay-modal{background:#1e293b;border-radius:16px;padding:32px;max-width:420px;width:90%;border:1px solid #3b82f6;text-align:center;}
+.pay-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px);}.close-pay{position:absolute;top:12px;right:12px;background:transparent;border:none;color:#64748b;font-size:20px;cursor:pointer;padding:4px 8px;margin:0;line-height:1;}.close-pay:hover{color:#e2e8f0;background:#334155;border-radius:4px;}
+.pay-modal{background:#1e293b;border-radius:16px;padding:32px;max-width:420px;width:90%;border:1px solid #3b82f6;text-align:center;position:relative;}
 .pay-modal h2{font-size:22px;margin-bottom:8px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .pay-modal .price{font-size:48px;font-weight:700;margin:16px 0;color:#22c55e;}
 .pay-modal .price span{font-size:16px;color:#94a3b8;}
@@ -40,6 +40,7 @@ button.secondary{background:#334155;color:#e2e8f0;}
 <div class="pay-overlay" id="payOverlay">
 <div class="pay-modal">
 <h2>🔒 付费工具</h2>
+<button class="close-pay" onclick="closePayWall()">✕</button>
 <p style="color:#94a3b8;font-size:14px;margin:8px 0;">支付 $1 解锁使用</p>
 <div class="price">$1 <span>USDT</span></div>
 <p style="color:#94a3b8;font-size:13px;">请转账到以下地址（TRC-20）</p>
@@ -53,25 +54,27 @@ button.secondary{background:#334155;color:#e2e8f0;}
 </div>
 <script>
 
-  // ====== Payment System ======
-  const payKey = '_pt_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
-  let payVerified = localStorage.getItem(payKey) === 'true';
   
-  // Intercept all button clicks for payment check
+  // ====== Payment System ======
+  var payKey = '_pt_' + window.location.pathname.split('/').pop().replace(/\..*$/,'');
+  var payVerified = localStorage.getItem(payKey) === 'true';
+  
+  // Always intercept action buttons in capture phase
   document.addEventListener('click', function(e) {
     var btn = e.target.closest('button');
-    if (!btn) return;
+    if (!btn || payVerified) return;
     if (btn.closest('.pay-overlay')) return;
-    if (payVerified) return;
     
+    // Show pay wall and STOP the button action completely
+    document.getElementById('payOverlay').style.display = 'flex';
+    e.stopImmediatePropagation();
     e.preventDefault();
-    e.stopPropagation();
-    showPayWall();
+    return false;
   }, true);
   
-  function showPayWall() {
-    document.getElementById('payOverlay').style.display = 'flex';
-  }
+  window.closePayWall = function() {
+    document.getElementById('payOverlay').style.display = 'none';
+  };
   
   window.copyPayAddr = function() {
     navigator.clipboard.writeText( + USDT_ADDR + );
@@ -89,7 +92,7 @@ button.secondary{background:#334155;color:#e2e8f0;}
     btn.disabled = true;
     btn.textContent = '⏳ 验证中...';
     
-    // Verify via TronGrid API
+    // Verify via TronGrid blockchain API
     fetch('https://api.trongrid.io/v1/transactions/' + tx + '/trc20')
       .then(function(r){ return r.json(); })
       .then(function(data){
@@ -101,11 +104,11 @@ button.secondary{background:#334155;color:#e2e8f0;}
           return;
         }
         
-        var toAddr = trc20.to_address_hex || '';
+        var toAddr = (trc20.to_address_hex || '').toLowerCase();
+        var ourAddr = 'T' + 'BzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH'.toLowerCase();
         var value = parseFloat(trc20.value) / 1000000;
-        var ourAddr =  + USDT_ADDR + ;
         
-        if (toAddr.toLowerCase().indexOf(ourAddr.toLowerCase().replace(/[A-Z]/g,function(m){return m.toLowerCase();})) >= 0 && value >= 1) {
+        if (toAddr.indexOf('tbzebcdaegvs2flnw7wjhu19rquavpfhh') >= 0 && value >= 1) {
           payVerified = true;
           localStorage.setItem(payKey, 'true');
           localStorage.setItem(payKey + '_tx', tx);
@@ -114,7 +117,8 @@ button.secondary{background:#334155;color:#e2e8f0;}
         } else {
           btn.disabled = false;
           btn.textContent = '✅ 验证并解锁';
-          alert('❌ 未检测到 $1 USDT 到账，请确认已转账到正确地址');
+          alert('❌ 未检测到 $1 USDT 到账
+请确认已转账到地址: ' +  + USDT_ADDR + );
         }
       })
       .catch(function(err){
