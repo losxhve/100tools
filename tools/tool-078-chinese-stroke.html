@@ -61,7 +61,7 @@ button.success{background:#22c55e;}
     document.getElementById('payOverlay').style.display = 'flex';
     e.stopImmediatePropagation();
   }, true);  // Block auto-execution: after DOM ready, check payment and block
-  document.addEventListener('load', function() {
+  window.addEventListener('load', function() {
     if (!payVerified) {
       // Hide all tool output areas
       document.querySelectorAll('.output-area, .result, #output, #result, #preview').forEach(function(el) {
@@ -74,24 +74,6 @@ button.success{background:#22c55e;}
       if (overlay) overlay.style.display = 'flex';
     }
   });
-
-
-          configurable: true,
-      enumerable: true,
-      set: function(fn) {
-          if (!payVerified) {
-            document.getElementById('payOverlay').style.display = 'flex';
-            return;
-          }
-          return fn.apply(this, arguments);
-        };
-      }
-    });
-  }
-
-
-
-  
   window.closePayWall = function() {
     document.getElementById('payOverlay').style.display = 'none';
   };
