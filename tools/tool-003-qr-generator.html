@@ -85,19 +85,25 @@ button.danger:hover { background:#dc2626; }
     
     document.getElementById('payOverlay').style.display = 'flex';
     e.stopImmediatePropagation();
-  }, true);
+  }, true);  // Block auto-execution: after DOM ready, check payment and block
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!payVerified) {
+      // Hide all tool output areas
+      document.querySelectorAll('.output-area, .result, #output, #result, #preview').forEach(function(el) {
+        if (!el.closest('.pay-overlay')) {
+          el.style.display = 'none';
+        }
+      });
+      // Show pay wall
+      var overlay = document.getElementById('payOverlay');
+      if (overlay) overlay.style.display = 'flex';
+    }
+  });
 
-  // Intercept window.onload to block auto-execution
-  var _origOnloadDesc = Object.getOwnPropertyDescriptor(window, 'onload');
-  if (_origOnloadDesc && _origOnloadDesc.configurable) {
-    var _storedOnload = null;
-    Object.defineProperty(window, 'onload', {
-      configurable: true,
+
+          configurable: true,
       enumerable: true,
-      get: function() { return _storedOnload; },
       set: function(fn) {
-        if (!fn) { _storedOnload = null; return; }
-        _storedOnload = function() {
           if (!payVerified) {
             document.getElementById('payOverlay').style.display = 'flex';
             return;
