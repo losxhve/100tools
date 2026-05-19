@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>秒表 - 100 Tools</title><style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column;}
+.container{max-width:720px;margin:0 auto;padding:24px 20px;flex:1;width:100%;}
+.header{text-align:center;margin-bottom:24px;}
+.header h1{font-size:24px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
+.header .sub{color:#64748b;font-size:13px;}
+.card{background:#1e293b;border-radius:12px;padding:24px;border:1px solid #334155;margin-bottom:16px;}
+label{display:block;font-size:13px;color:#94a3b8;margin-bottom:6px;font-weight:600;}
+textarea,input,select{width:100%;padding:10px 14px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:14px;outline:none;margin-bottom:12px;}
+textarea:focus,input:focus,select:focus{border-color:#3b82f6;}
+textarea{min-height:120px;resize:vertical;font-family:monospace;}
+button{padding:10px 24px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;background:#3b82f6;color:white;transition:background.15s;margin-right:8px;margin-bottom:8px;}
+button:hover{background:#2563eb;}
+button.secondary{background:#334155;color:#e2e8f0;}
+.row{display:flex;gap:12px;flex-wrap:wrap;}
+.row>*{flex:1;min-width:150px;}
+.output-area{background:#0f172a;border-radius:8px;padding:14px;margin-top:12px;font-family:monospace;font-size:14px;white-space:pre-wrap;word-break:break-all;border:1px solid #334155;min-height:40px;color:#22c55e;}
+.footer{text-align:center;padding:24px 20px;border-top:1px solid #334155;margin-top:24px;}
+.footer .addr{color:#a5b4fc;font-size:12px;cursor:pointer;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:10px 20px;border-radius:8px;z-index:999;display:none;}
+</style></head><body><div class="container"><div class="header"><h1>秒表</h1><div class="sub">精确计时秒表</div></div><div class='card' style='text-align:center;'><div id='display' style='font-size:48px;font-weight:700;font-family:monospace;margin-bottom:16px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;'>00:00.0</div><button onclick='swStart()'>▶ 开始</button><button class='secondary' onclick='swPause()'>⏸ 暂停</button><button class='secondary' onclick='swReset()'>🔄 重置</button><button onclick='swLap()'>🏁 计次</button><div id='laps' style='margin-top:12px;color:#94a3b8;font-size:13px;text-align:left;max-height:200px;overflow-y:auto;'></div></div><script>let swInt,swStartTime,swElapsed=0,running=false,lapNum=0;function swStart(){if(running)return;running=true;swStartTime=Date.now()-swElapsed;swInt=setInterval(()=>{swElapsed=Date.now()-swStartTime;updateSw();},100);}function swPause(){clearInterval(swInt);running=false;}function swReset(){clearInterval(swInt);running=false;swElapsed=0;lapNum=0;document.getElementById('display').textContent='00:00.0';document.getElementById('laps').innerHTML='';}function swLap(){if(!running)return;lapNum++;const t=swElapsed;const s=Math.floor(t/1000);const ds=Math.floor((t%1000)/100);const m=Math.floor(s/60);const sec=s%60;const d=document.getElementById('laps');d.innerHTML='<div style="color:#e2e8f0;padding:4px 0;">计次 '+lapNum+': '+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0')+'.'+ds+'</div>'+d.innerHTML;}function updateSw(){const t=swElapsed;const s=Math.floor(t/1000);const ds=Math.floor((t%1000)/100);const m=Math.floor(s/60);const sec=s%60;document.getElementById('display').textContent=String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0')+'.'+ds;}</script><div class="footer"><div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div><div class="addr" onclick="navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH').then(()=>{const t=document.getElementById('toast');t.textContent='✅ 地址已复制';t.style.display='block';setTimeout(()=>t.style.display='none',2000);})">USDT (TRC-20): TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</div></div><div class="toast" id="toast"></div></div></body></html>

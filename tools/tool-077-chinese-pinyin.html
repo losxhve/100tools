@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>中文拼音 - 100 Tools</title><style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column;}
+.container{max-width:720px;margin:0 auto;padding:24px 20px;flex:1;width:100%;}
+.header{text-align:center;margin-bottom:24px;}
+.header h1{font-size:24px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
+.header .sub{color:#64748b;font-size:13px;}
+.card{background:#1e293b;border-radius:12px;padding:24px;border:1px solid #334155;margin-bottom:16px;}
+label{display:block;font-size:13px;color:#94a3b8;margin-bottom:6px;font-weight:600;}
+textarea,input,select{width:100%;padding:10px 14px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:14px;font-family:monospace;outline:none;margin-bottom:12px;}
+textarea:focus,input:focus,select:focus{border-color:#3b82f6;}
+textarea{min-height:120px;resize:vertical;}
+button{padding:10px 24px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;background:#3b82f6;color:white;transition:background .15s;margin-right:8px;margin-bottom:8px;}
+button:hover{background:#2563eb;}
+button.secondary{background:#334155;color:#e2e8f0;}
+button.secondary:hover{background:#475569;}
+button.success{background:#22c55e;}
+.row{display:flex;gap:12px;flex-wrap:wrap;}
+.row>*{flex:1;min-width:150px;}
+.output-area{background:#0f172a;border-radius:8px;padding:14px;margin-top:12px;font-family:monospace;font-size:14px;white-space:pre-wrap;word-break:break-all;border:1px solid #334155;min-height:40px;color:#22c55e;}
+.result{font-size:15px;color:#22c55e;font-weight:600;margin-top:8px;}
+.footer{text-align:center;padding:24px 20px;border-top:1px solid #334155;margin-top:24px;}
+.footer .addr{color:#a5b4fc;font-size:12px;cursor:pointer;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:10px 20px;border-radius:8px;font-size:14px;z-index:999;display:none;}
+</style></head>
+<body>
+<div class="container">
+<div class="header"><h1>中文拼音</h1><div class="sub">将汉字转换为拼音</div></div>
+<div class="card">
+<label>输入汉字</label><input id="text" value="你好世界" oninput="gen()">
+<div class="output-area" id="output"></div>
+</div>
+<script>
+// Simplified pinyin mapping for common chars
+const PY={'你':'nǐ','好':'hǎo','世':'shì','界':'jiè','中':'zhōng','国':'guó','人':'rén','大':'dà','小':'xiǎo','上':'shàng','下':'xià','左':'zuǒ','右':'yòu','前':'qián','后':'hòu','里':'lǐ','外':'wài','天':'tiān','地':'dì','水':'shuǐ','火':'huǒ','风':'fēng','云':'yún','山':'shān','海':'hǎi','日':'rì','月':'yuè','星':'xīng','春':'chūn','夏':'xià','秋':'qiū','冬':'dōng','一':'yī','二':'èr','三':'sān','四':'sì','五':'wǔ','六':'liù','七':'qī','八':'bā','九':'jiǔ','十':'shí','百':'bǎi','千':'qiān','万':'wàn','元':'yuán','是':'shì','不':'bù','的':'de','了':'le','和':'hé','有':'yǒu','我':'wǒ','他':'tā','她':'tā','它':'tā','们':'men','在':'zài','这':'zhè','那':'nà','什':'shén','么':'me','吗':'ma','啊':'a','吧':'ba','呢':'ne','吃':'chī','喝':'hē','走':'zǒu','跑':'pǎo','看':'kàn','说':'shuō','听':'tīng','想':'xiǎng','知':'zhī','道':'dào','能':'néng','会':'huì','要':'yào','可':'kě','以':'yǐ','没':'méi','来':'lái','去':'qù','开':'kāi','关':'guān','买':'mǎi','卖':'mài','工':'gōng','作':'zuò','学':'xué','习':'xí','爱':'ài','家':'jiā','新':'xīn','老':'lǎo','多':'duō','少':'shǎo','快':'kuài','慢':'màn','高':'gāo','低':'dī','长':'cháng','短':'duǎn'};
+function gen(){const t=document.getElementById('text').value;let r='';for(const c of t){r+=c+'['+(PY[c]||'?')+'] ';}
+document.getElementById('output').textContent=r.trim();}
+window.onload=gen;
+</script>
+
+<div class="footer">
+<div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div>
+<div class="addr" onclick="copyAddr()">USDT (TRC-20): TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</div>
+<div style="color:#334155;font-size:11px;margin-top:8px;">工具集 · 开源免费</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+function copyAddr(){navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH').then(()=>{const t=document.getElementById('toast');t.textContent='✅ 地址已复制';t.style.display='block';setTimeout(()=>t.style.display='none',2000);});}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2000);}
+</script>
+
+</div>
+</body>
+</html>

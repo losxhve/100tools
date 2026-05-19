@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>数据大小可视化 - 100 Tools</title><style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column;}
+.container{max-width:720px;margin:0 auto;padding:24px 20px;flex:1;width:100%;}
+.header{text-align:center;margin-bottom:24px;}
+.header h1{font-size:24px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
+.header .sub{color:#64748b;font-size:13px;}
+.card{background:#1e293b;border-radius:12px;padding:24px;border:1px solid #334155;margin-bottom:16px;}
+label{display:block;font-size:13px;color:#94a3b8;margin-bottom:6px;font-weight:600;}
+textarea,input,select{width:100%;padding:10px 14px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:14px;outline:none;margin-bottom:12px;}
+textarea:focus,input:focus,select:focus{border-color:#3b82f6;}
+textarea{min-height:120px;resize:vertical;font-family:monospace;}
+button{padding:10px 24px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;background:#3b82f6;color:white;transition:background.15s;margin-right:8px;margin-bottom:8px;}
+button:hover{background:#2563eb;}
+button.secondary{background:#334155;color:#e2e8f0;}
+.row{display:flex;gap:12px;flex-wrap:wrap;}
+.row>*{flex:1;min-width:150px;}
+.output-area{background:#0f172a;border-radius:8px;padding:14px;margin-top:12px;font-family:monospace;font-size:14px;white-space:pre-wrap;word-break:break-all;border:1px solid #334155;min-height:40px;color:#22c55e;}
+.footer{text-align:center;padding:24px 20px;border-top:1px solid #334155;margin-top:24px;}
+.footer .addr{color:#a5b4fc;font-size:12px;cursor:pointer;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:10px 20px;border-radius:8px;z-index:999;display:none;}
+</style></head><body><div class="container"><div class="header"><h1>数据大小可视化</h1><div class="sub">直观对比各种数据大小</div></div><div class='card'><div class='row'><div><label>数值</label><input type='number' id='val' value='500' oninput='vis()'></div><div><label>单位</label><select id='unit' onchange='vis()'><option value='B'>B</option><option value='KB'>KB</option><option value='MB' selected>MB</option><option value='GB'>GB</option><option value='TB'>TB</option></select></div></div><div class='output-area' id='output'></div></div><script>function vis(){const v=parseFloat(document.getElementById('val').value);const u=document.getElementById('unit').value;if(isNaN(v)||v<=0){document.getElementById('output').textContent='输入正数';return;}const units=['B','KB','MB','GB','TB'];const pos=units.indexOf(u);const bytes=v*Math.pow(1024,pos);const comparisons=[{name:'一首MP3歌曲',size:5*1024*1024},{name:'一张高清照片',size:3*1024*1024},{name:'一部高清电影',size:2*1024*1024*1024},{name:'一本电子书',size:500*1024},{name:'一个网页',size:2*1024*1024},{name:'一分钟视频',size:30*1024*1024},{name:'一张CD',size:700*1024*1024},{name:'一张DVD',size:4.7*1024*1024*1024}];let html='<table style="width:100%;font-size:13px;">';comparisons.forEach(c=>{const count=bytes/c.size;html+='<tr><td style="padding:4px;color:#94a3b8;">'+c.name+'</td><td style="padding:4px;text-align:right;">'+(count>=1?'<strong style="color:#22c55e;">约 '+Math.round(count)+'</strong>':'<span style="color:#475569;">小于1个</span>')+'</td></tr>';});html+='</table>';document.getElementById('output').innerHTML=html;}window.onload=vis;</script><div class="footer"><div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div><div class="addr" onclick="navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH').then(()=>{const t=document.getElementById('toast');t.textContent='✅ 地址已复制';t.style.display='block';setTimeout(()=>t.style.display='none',2000);})">USDT (TRC-20): TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</div></div><div class="toast" id="toast"></div></div></body></html>

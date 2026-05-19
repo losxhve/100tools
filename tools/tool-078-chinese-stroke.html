@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>汉字笔画 - 100 Tools</title><style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column;}
+.container{max-width:720px;margin:0 auto;padding:24px 20px;flex:1;width:100%;}
+.header{text-align:center;margin-bottom:24px;}
+.header h1{font-size:24px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
+.header .sub{color:#64748b;font-size:13px;}
+.card{background:#1e293b;border-radius:12px;padding:24px;border:1px solid #334155;margin-bottom:16px;}
+label{display:block;font-size:13px;color:#94a3b8;margin-bottom:6px;font-weight:600;}
+textarea,input,select{width:100%;padding:10px 14px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:14px;font-family:monospace;outline:none;margin-bottom:12px;}
+textarea:focus,input:focus,select:focus{border-color:#3b82f6;}
+textarea{min-height:120px;resize:vertical;}
+button{padding:10px 24px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;background:#3b82f6;color:white;transition:background .15s;margin-right:8px;margin-bottom:8px;}
+button:hover{background:#2563eb;}
+button.secondary{background:#334155;color:#e2e8f0;}
+button.secondary:hover{background:#475569;}
+button.success{background:#22c55e;}
+.row{display:flex;gap:12px;flex-wrap:wrap;}
+.row>*{flex:1;min-width:150px;}
+.output-area{background:#0f172a;border-radius:8px;padding:14px;margin-top:12px;font-family:monospace;font-size:14px;white-space:pre-wrap;word-break:break-all;border:1px solid #334155;min-height:40px;color:#22c55e;}
+.result{font-size:15px;color:#22c55e;font-weight:600;margin-top:8px;}
+.footer{text-align:center;padding:24px 20px;border-top:1px solid #334155;margin-top:24px;}
+.footer .addr{color:#a5b4fc;font-size:12px;cursor:pointer;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:10px 20px;border-radius:8px;font-size:14px;z-index:999;display:none;}
+</style></head>
+<body>
+<div class="container">
+<div class="header"><h1>汉字笔画</h1><div class="sub">查询汉字笔画数</div></div>
+<div class="card">
+<label>输入汉字</label><input id="text" value="中文" oninput="gen()">
+<div class="output-area" id="output"></div>
+</div>
+<script>
+const STROKE={'一':1,'丨':1,'丿':1,'丶':1,'乙':1,'二':2,'十':2,'丁':2,'厂':2,'七':2,'人':2,'入':2,'八':2,'几':2,'儿':2,'九':2,'了':2,'力':2,'刀':2,'又':2,'三':3,'干':3,'于':3,'工':3,'土':3,'士':3,'大':3,'小':3,'口':3,'山':3,'川':3,'个':3,'亿':3,'千':3,'门':3,'义':3,'之':3,'已':3,'子':3,'也':3,'女':3,'飞':3,'马':3,'四':5,'五':4,'六':4,'七':2,'八':2,'九':2,'十':2,'中':4,'国':8,'人':2,'的':8,'了':2,'是':9,'不':4,'我':7,'在':6,'有':6,'他':5,'她':6,'们':5,'这':7,'那':6,'你':7,'好':6,'世':5,'界':9,'天':4,'地':6,'水':4,'火':4,'风':4,'文':4,'日':4,'月':4,'星':9,'光':6,'明':8,'年':6,'生':5,'学':8,'大':3,'小':3,'上':3,'下':3,'左':5,'右':5,'前':9,'后':6,'里':7,'外':5,'多':6,'少':4,'长':4,'高':10,'新':13,'老':6,'家':10,'爱':10,'会':6,'能':10,'要':9,'可':5,'以':4,'来':7,'去':5,'开':4,'关':6,'吃':6,'喝':12,'走':7,'跑':12,'看':9,'说':9,'听':7,'想':13,'知':8,'道':12,'没':7,'工':3,'作':7,'买':6,'卖':8,'春':9,'夏':10,'秋':9,'冬':5,'元':4,'金':8,'木':4,'花':7,'草':9,'红':6,'绿':11,'蓝':13,'白':5,'黑':12,'黄':11};
+function gen(){const t=document.getElementById('text').value;let r='';for(const c of t){r+=c+':'+(STROKE[c]||'?')+'画 ';}
+document.getElementById('output').textContent=r.trim();}
+window.onload=gen;
+</script>
+
+<div class="footer">
+<div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div>
+<div class="addr" onclick="copyAddr()">USDT (TRC-20): TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</div>
+<div style="color:#334155;font-size:11px;margin-top:8px;">工具集 · 开源免费</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+function copyAddr(){navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH').then(()=>{const t=document.getElementById('toast');t.textContent='✅ 地址已复制';t.style.display='block';setTimeout(()=>t.style.display='none',2000);});}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2000);}
+</script>
+
+</div>
+</body>
+</html>

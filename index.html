@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>100 Tools - 免费在线工具集</title>
+<meta name="description" content="100个免费在线工具：编码转换、密码生成、单位换算、颜色工具等，全部开源免费">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;}
+.container{max-width:1100px;margin:0 auto;padding:24px 20px;}
+.hero{text-align:center;padding:40px 0;}
+.hero h1{font-size:36px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;}
+.hero p{color:#94a3b8;font-size:16px;}
+.search-box{max-width:400px;margin:24px auto;}
+.search-box input{width:100%;padding:12px 16px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;font-size:15px;outline:none;}
+.search-box input:focus{border-color:#3b82f6;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:24px 0;}
+.card{display:block;background:#1e293b;border-radius:10px;padding:16px;border:1px solid #334155;text-decoration:none;color:#e2e8f0;transition:transform.15s,border-color.15s;}
+.card:hover{transform:translateY(-2px);border-color:#3b82f6;}
+.card .num{font-size:11px;color:#475569;margin-bottom:4px;}
+.card .title{font-size:14px;font-weight:600;margin-bottom:4px;}
+.card .desc{font-size:12px;color:#64748b;}
+.stats{text-align:center;margin:16px 0;color:#64748b;font-size:14px;}
+.footer{text-align:center;padding:32px 0;border-top:1px solid #334155;margin-top:32px;}
+.footer .addr{color:#a5b4fc;font-size:13px;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="hero">
+<h1>🛠 100 Tools</h1>
+<p>免费在线工具集 · 编码 · 转换 · 计算 · 生成 · 全部本地处理 · 开源免费</p>
+</div>
+<div class="search-box"><input type="text" id="search" placeholder="搜索工具..." oninput="filter()"></div>
+<div class="stats" id="stats">共 100 个工具</div>
+<div class="grid" id="grid"><a href="tools/tool-001-text-to-binary.html" class="card"><div class="num">001</div><div class="title">文本转二进制</div><div class="desc">Text To Binary</div></a>
+<a href="tools/tool-002-base64-encode.html" class="card"><div class="num">002</div><div class="title">Base64编解码</div><div class="desc">Base64 Encode</div></a>
+<a href="tools/tool-003-qr-generator.html" class="card"><div class="num">003</div><div class="title">二维码生成</div><div class="desc">Qr Generator</div></a>
+<a href="tools/tool-004-json-formatter.html" class="card"><div class="num">004</div><div class="title">JSON格式化</div><div class="desc">Json Formatter</div></a>
+<a href="tools/tool-005-password-generator.html" class="card"><div class="num">005</div><div class="title">密码生成器</div><div class="desc">Password Generator</div></a>
+<a href="tools/tool-006-uuid-generator.html" class="card"><div class="num">006</div><div class="title">UUID生成器</div><div class="desc">Uuid Generator</div></a>
+<a href="tools/tool-007-md5-hash.html" class="card"><div class="num">007</div><div class="title">Hash计算器</div><div class="desc">Md5 Hash</div></a>
+<a href="tools/tool-008-regex-tester.html" class="card"><div class="num">008</div><div class="title">正则表达式测试</div><div class="desc">Regex Tester</div></a>
+<a href="tools/tool-009-unit-converter.html" class="card"><div class="num">009</div><div class="title">单位换算</div><div class="desc">Unit Converter</div></a>
+<a href="tools/tool-010-color-picker.html" class="card"><div class="num">010</div><div class="title">颜色工具</div><div class="desc">Color Picker</div></a>
+<a href="tools/tool-011-timestamp-converter.html" class="card"><div class="num">011</div><div class="title">时间戳转换</div><div class="desc">Timestamp Converter</div></a>
+<a href="tools/tool-012-html-entities.html" class="card"><div class="num">012</div><div class="title">HTML实体编码</div><div class="desc">Html Entities</div></a>
+<a href="tools/tool-013-case-converter.html" class="card"><div class="num">013</div><div class="title">大小写转换</div><div class="desc">Case Converter</div></a>
+<a href="tools/tool-014-markdown-preview.html" class="card"><div class="num">014</div><div class="title">Markdown预览</div><div class="desc">Markdown Preview</div></a>
+<a href="tools/tool-015-diff-checker.html" class="card"><div class="num">015</div><div class="title">文本对比</div><div class="desc">Diff Checker</div></a>
+<a href="tools/tool-016-word-counter.html" class="card"><div class="num">016</div><div class="title">字数统计</div><div class="desc">Word Counter</div></a>
+<a href="tools/tool-017-url-encoder.html" class="card"><div class="num">017</div><div class="title">URL编码解码</div><div class="desc">Url Encoder</div></a>
+<a href="tools/tool-018-currency-converter.html" class="card"><div class="num">018</div><div class="title">汇率换算</div><div class="desc">Currency Converter</div></a>
+<a href="tools/tool-019-pomodoro.html" class="card"><div class="num">019</div><div class="title">番茄钟</div><div class="desc">Pomodoro</div></a>
+<a href="tools/tool-020-color-contrast.html" class="card"><div class="num">020</div><div class="title">颜色对比度</div><div class="desc">Color Contrast</div></a>
+<a href="tools/tool-021-cron-builder.html" class="card"><div class="num">021</div><div class="title">Cron表达式</div><div class="desc">Cron Builder</div></a>
+<a href="tools/tool-022-jwt-decoder.html" class="card"><div class="num">022</div><div class="title">JWT解码</div><div class="desc">Jwt Decoder</div></a>
+<a href="tools/tool-023-ip-info.html" class="card"><div class="num">023</div><div class="title">IP地址查询</div><div class="desc">Ip Info</div></a>
+<a href="tools/tool-024-csv-json.html" class="card"><div class="num">024</div><div class="title">CSV↔JSON转换</div><div class="desc">Csv Json</div></a>
+<a href="tools/tool-025-bmi-calculator.html" class="card"><div class="num">025</div><div class="title">BMI计算器</div><div class="desc">Bmi Calculator</div></a>
+<a href="tools/tool-026-loan-calculator.html" class="card"><div class="num">026</div><div class="title">贷款计算器</div><div class="desc">Loan Calculator</div></a>
+<a href="tools/tool-027-file-hash.html" class="card"><div class="num">027</div><div class="title">文件哈希校验</div><div class="desc">File Hash</div></a>
+<a href="tools/tool-028-ascii-art.html" class="card"><div class="num">028</div><div class="title">Ascii Art</div><div class="desc">Ascii Art</div></a>
+<a href="tools/tool-029-roman-numeral.html" class="card"><div class="num">029</div><div class="title">Roman Numeral</div><div class="desc">Roman Numeral</div></a>
+<a href="tools/tool-030-number-to-words.html" class="card"><div class="num">030</div><div class="title">Number To Words</div><div class="desc">Number To Words</div></a>
+<a href="tools/tool-031-password-strength.html" class="card"><div class="num">031</div><div class="title">Password Strength</div><div class="desc">Password Strength</div></a>
+<a href="tools/tool-032-text-sorter.html" class="card"><div class="num">032</div><div class="title">Text Sorter</div><div class="desc">Text Sorter</div></a>
+<a href="tools/tool-033-random-picker.html" class="card"><div class="num">033</div><div class="title">Random Picker</div><div class="desc">Random Picker</div></a>
+<a href="tools/tool-034-coin-flip.html" class="card"><div class="num">034</div><div class="title">Coin Flip</div><div class="desc">Coin Flip</div></a>
+<a href="tools/tool-035-dice-roller.html" class="card"><div class="num">035</div><div class="title">Dice Roller</div><div class="desc">Dice Roller</div></a>
+<a href="tools/tool-036-prime-checker.html" class="card"><div class="num">036</div><div class="title">Prime Checker</div><div class="desc">Prime Checker</div></a>
+<a href="tools/tool-037-fibonacci.html" class="card"><div class="num">037</div><div class="title">Fibonacci</div><div class="desc">Fibonacci</div></a>
+<a href="tools/tool-038-factorial.html" class="card"><div class="num">038</div><div class="title">Factorial</div><div class="desc">Factorial</div></a>
+<a href="tools/tool-039-http-status.html" class="card"><div class="num">039</div><div class="title">Http Status</div><div class="desc">Http Status</div></a>
+<a href="tools/tool-040-mime-types.html" class="card"><div class="num">040</div><div class="title">Mime Types</div><div class="desc">Mime Types</div></a>
+<a href="tools/tool-041-color-names.html" class="card"><div class="num">041</div><div class="title">Color Names</div><div class="desc">Color Names</div></a>
+<a href="tools/tool-042-country-codes.html" class="card"><div class="num">042</div><div class="title">Country Codes</div><div class="desc">Country Codes</div></a>
+<a href="tools/tool-043-port-checker.html" class="card"><div class="num">043</div><div class="title">Port Checker</div><div class="desc">Port Checker</div></a>
+<a href="tools/tool-044-number-base.html" class="card"><div class="num">044</div><div class="title">Number Base</div><div class="desc">Number Base</div></a>
+<a href="tools/tool-045-byte-converter.html" class="card"><div class="num">045</div><div class="title">Byte Converter</div><div class="desc">Byte Converter</div></a>
+<a href="tools/tool-046-timezone-conv.html" class="card"><div class="num">046</div><div class="title">Timezone Conv</div><div class="desc">Timezone Conv</div></a>
+<a href="tools/tool-047-percentage-calc.html" class="card"><div class="num">047</div><div class="title">Percentage Calc</div><div class="desc">Percentage Calc</div></a>
+<a href="tools/tool-048-unicode-info.html" class="card"><div class="num">048</div><div class="title">Unicode Info</div><div class="desc">Unicode Info</div></a>
+<a href="tools/tool-049-slug-generator.html" class="card"><div class="num">049</div><div class="title">Slug Generator</div><div class="desc">Slug Generator</div></a>
+<a href="tools/tool-050-text-reverser.html" class="card"><div class="num">050</div><div class="title">Text Reverser</div><div class="desc">Text Reverser</div></a>
+<a href="tools/tool-051-duplicate-remover.html" class="card"><div class="num">051</div><div class="title">Duplicate Remover</div><div class="desc">Duplicate Remover</div></a>
+<a href="tools/tool-052-list-sorter.html" class="card"><div class="num">052</div><div class="title">List Sorter</div><div class="desc">List Sorter</div></a>
+<a href="tools/tool-053-discount-calc.html" class="card"><div class="num">053</div><div class="title">Discount Calc</div><div class="desc">Discount Calc</div></a>
+<a href="tools/tool-054-age-calculator.html" class="card"><div class="num">054</div><div class="title">Age Calculator</div><div class="desc">Age Calculator</div></a>
+<a href="tools/tool-055-date-calculator.html" class="card"><div class="num">055</div><div class="title">Date Calculator</div><div class="desc">Date Calculator</div></a>
+<a href="tools/tool-056-tip-calculator.html" class="card"><div class="num">056</div><div class="title">Tip Calculator</div><div class="desc">Tip Calculator</div></a>
+<a href="tools/tool-057-investment-calc.html" class="card"><div class="num">057</div><div class="title">Investment Calc</div><div class="desc">Investment Calc</div></a>
+<a href="tools/tool-058-hash-compare.html" class="card"><div class="num">058</div><div class="title">Hash Compare</div><div class="desc">Hash Compare</div></a>
+<a href="tools/tool-059-markdown-table.html" class="card"><div class="num">059</div><div class="title">Markdown Table</div><div class="desc">Markdown Table</div></a>
+<a href="tools/tool-060-barcode-generator.html" class="card"><div class="num">060</div><div class="title">Barcode Generator</div><div class="desc">Barcode Generator</div></a>
+<a href="tools/tool-061-json-path.html" class="card"><div class="num">061</div><div class="title">Json Path</div><div class="desc">Json Path</div></a>
+<a href="tools/tool-062-text-statistics.html" class="card"><div class="num">062</div><div class="title">Text Statistics</div><div class="desc">Text Statistics</div></a>
+<a href="tools/tool-063-random-number.html" class="card"><div class="num">063</div><div class="title">Random Number</div><div class="desc">Random Number</div></a>
+<a href="tools/tool-064-text-diff-percent.html" class="card"><div class="num">064</div><div class="title">Text Diff Percent</div><div class="desc">Text Diff Percent</div></a>
+<a href="tools/tool-065-svg-editor.html" class="card"><div class="num">065</div><div class="title">Svg Editor</div><div class="desc">Svg Editor</div></a>
+<a href="tools/tool-066-password-eval.html" class="card"><div class="num">066</div><div class="title">Password Eval</div><div class="desc">Password Eval</div></a>
+<a href="tools/tool-067-html-entities-all.html" class="card"><div class="num">067</div><div class="title">Html Entities All</div><div class="desc">Html Entities All</div></a>
+<a href="tools/tool-068-crossword-helper.html" class="card"><div class="num">068</div><div class="title">Crossword Helper</div><div class="desc">Crossword Helper</div></a>
+<a href="tools/tool-069-morse-code.html" class="card"><div class="num">069</div><div class="title">Morse Code</div><div class="desc">Morse Code</div></a>
+<a href="tools/tool-070-border-radius.html" class="card"><div class="num">070</div><div class="title">Border Radius</div><div class="desc">Border Radius</div></a>
+<a href="tools/tool-071-box-shadow.html" class="card"><div class="num">071</div><div class="title">Box Shadow</div><div class="desc">Box Shadow</div></a>
+<a href="tools/tool-072-text-shadow.html" class="card"><div class="num">072</div><div class="title">Text Shadow</div><div class="desc">Text Shadow</div></a>
+<a href="tools/tool-073-css-gradient.html" class="card"><div class="num">073</div><div class="title">Css Gradient</div><div class="desc">Css Gradient</div></a>
+<a href="tools/tool-074-css-flexbox.html" class="card"><div class="num">074</div><div class="title">Css Flexbox</div><div class="desc">Css Flexbox</div></a>
+<a href="tools/tool-075-iban-validator.html" class="card"><div class="num">075</div><div class="title">Iban Validator</div><div class="desc">Iban Validator</div></a>
+<a href="tools/tool-076-vat-calculator.html" class="card"><div class="num">076</div><div class="title">Vat Calculator</div><div class="desc">Vat Calculator</div></a>
+<a href="tools/tool-077-chinese-pinyin.html" class="card"><div class="num">077</div><div class="title">Chinese Pinyin</div><div class="desc">Chinese Pinyin</div></a>
+<a href="tools/tool-078-chinese-stroke.html" class="card"><div class="num">078</div><div class="title">Chinese Stroke</div><div class="desc">Chinese Stroke</div></a>
+<a href="tools/tool-079-code-prettify.html" class="card"><div class="num">079</div><div class="title">Code Prettify</div><div class="desc">Code Prettify</div></a>
+<a href="tools/tool-080-hex-rgb.html" class="card"><div class="num">080</div><div class="title">Hex Rgb</div><div class="desc">Hex Rgb</div></a>
+<a href="tools/tool-081-timer.html" class="card"><div class="num">081</div><div class="title">Timer</div><div class="desc">Timer</div></a>
+<a href="tools/tool-082-stopwatch.html" class="card"><div class="num">082</div><div class="title">Stopwatch</div><div class="desc">Stopwatch</div></a>
+<a href="tools/tool-083-rot13.html" class="card"><div class="num">083</div><div class="title">Rot13</div><div class="desc">Rot13</div></a>
+<a href="tools/tool-084-emoji-picker.html" class="card"><div class="num">084</div><div class="title">Emoji Picker</div><div class="desc">Emoji Picker</div></a>
+<a href="tools/tool-085-lottery-picker.html" class="card"><div class="num">085</div><div class="title">Lottery Picker</div><div class="desc">Lottery Picker</div></a>
+<a href="tools/tool-086-base-converter.html" class="card"><div class="num">086</div><div class="title">Base Converter</div><div class="desc">Base Converter</div></a>
+<a href="tools/tool-087-temperature-conv.html" class="card"><div class="num">087</div><div class="title">Temperature Conv</div><div class="desc">Temperature Conv</div></a>
+<a href="tools/tool-088-speed-converter.html" class="card"><div class="num">088</div><div class="title">Speed Converter</div><div class="desc">Speed Converter</div></a>
+<a href="tools/tool-089-electricity-calc.html" class="card"><div class="num">089</div><div class="title">Electricity Calc</div><div class="desc">Electricity Calc</div></a>
+<a href="tools/tool-090-fuel-calc.html" class="card"><div class="num">090</div><div class="title">Fuel Calc</div><div class="desc">Fuel Calc</div></a>
+<a href="tools/tool-091-gpa-calc.html" class="card"><div class="num">091</div><div class="title">Gpa Calc</div><div class="desc">Gpa Calc</div></a>
+<a href="tools/tool-092-scientific-calc.html" class="card"><div class="num">092</div><div class="title">Scientific Calc</div><div class="desc">Scientific Calc</div></a>
+<a href="tools/tool-093-binary-calc.html" class="card"><div class="num">093</div><div class="title">Binary Calc</div><div class="desc">Binary Calc</div></a>
+<a href="tools/tool-094-data-size-vis.html" class="card"><div class="num">094</div><div class="title">Data Size Vis</div><div class="desc">Data Size Vis</div></a>
+<a href="tools/tool-095-html-minifier.html" class="card"><div class="num">095</div><div class="title">Html Minifier</div><div class="desc">Html Minifier</div></a>
+<a href="tools/tool-096-css-minifier.html" class="card"><div class="num">096</div><div class="title">Css Minifier</div><div class="desc">Css Minifier</div></a>
+<a href="tools/tool-097-js-minifier.html" class="card"><div class="num">097</div><div class="title">Js Minifier</div><div class="desc">Js Minifier</div></a>
+<a href="tools/tool-098-xml-formatter.html" class="card"><div class="num">098</div><div class="title">Xml Formatter</div><div class="desc">Xml Formatter</div></a>
+<a href="tools/tool-099-sql-formatter.html" class="card"><div class="num">099</div><div class="title">Sql Formatter</div><div class="desc">Sql Formatter</div></a>
+<a href="tools/tool-100-yaml-json.html" class="card"><div class="num">100</div><div class="title">Yaml Json</div><div class="desc">Yaml Json</div></a></div>
+<div class="footer">
+<div style="color:#475569;margin-bottom:8px;">💖 如果这些工具有帮助，欢迎支持开发</div>
+<div class="addr" onclick="copyAddr()">USDT (TRC-20): TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</div>
+<div style="color:#334155;font-size:12px;margin-top:8px;">全部开源免费 · 数据仅在本地浏览器中处理，不上传服务器</div>
+</div>
+</div>
+<script>
+function filter(){const q=document.getElementById('search').value.toLowerCase();const cards=document.querySelectorAll('.card');let c=0;cards.forEach(card=>{const m=card.textContent.toLowerCase().includes(q);card.style.display=m?'':'none';if(m)c++;});document.getElementById('stats').textContent=(q?'搜索到 ':'共 ')+c+' 个工具';}
+function copyAddr(){navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH').then(()=>{const t=document.getElementById('toast')||(()=>{const e=document.createElement('div');e.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:10px 20px;border-radius:8px;z-index:999;';e.id='toast';document.body.appendChild(e);return e;})();t.textContent='✅ 地址已复制';t.style.display='block';setTimeout(()=>t.style.display='none',2000);});}
+</script>
+</body>
+</html>

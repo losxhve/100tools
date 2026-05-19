@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>颜色名称 - 100 Tools</title><style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column;}
+.container{max-width:720px;margin:0 auto;padding:24px 20px;flex:1;width:100%;}
+.header{text-align:center;margin-bottom:24px;}
+.header h1{font-size:24px;background:linear-gradient(135deg,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
+.header .sub{color:#64748b;font-size:13px;}
+.card{background:#1e293b;border-radius:12px;padding:24px;border:1px solid #334155;margin-bottom:16px;}
+label{display:block;font-size:13px;color:#94a3b8;margin-bottom:6px;font-weight:600;}
+textarea,input,select{width:100%;padding:10px 14px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:14px;font-family:monospace;outline:none;margin-bottom:12px;}
+textarea:focus,input:focus,select:focus{border-color:#3b82f6;}
+textarea{min-height:120px;resize:vertical;}
+button{padding:10px 24px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;background:#3b82f6;color:white;transition:background .15s;margin-right:8px;margin-bottom:8px;}
+button:hover{background:#2563eb;}
+button.secondary{background:#334155;color:#e2e8f0;}
+button.secondary:hover{background:#475569;}
+button.success{background:#22c55e;}
+.row{display:flex;gap:12px;flex-wrap:wrap;}
+.row>*{flex:1;min-width:150px;}
+.output-area{background:#0f172a;border-radius:8px;padding:14px;margin-top:12px;font-family:monospace;font-size:14px;white-space:pre-wrap;word-break:break-all;border:1px solid #334155;min-height:40px;color:#22c55e;}
+.result{font-size:15px;color:#22c55e;font-weight:600;margin-top:8px;}
+.footer{text-align:center;padding:24px 20px;border-top:1px solid #334155;margin-top:24px;}
+.footer .addr{color:#a5b4fc;font-size:12px;cursor:pointer;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:10px 20px;border-radius:8px;font-size:14px;z-index:999;display:none;}
+</style></head>
+<body>
+<div class="container">
+<div class="header"><h1>颜色名称</h1><div class="sub">HTML颜色名称与色值对照</div></div>
+<div class="card">
+<label>搜索颜色</label><input id="search" placeholder="输入颜色名..." oninput="filter()">
+<div id="grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:12px;"></div>
+</div>
+<script>
+const COLORS=[{n:'AliceBlue',h:'#F0F8FF'},{n:'AntiqueWhite',h:'#FAEBD7'},{n:'Aqua',h:'#00FFFF'},{n:'Aquamarine',h:'#7FFFD4'},{n:'Azure',h:'#F0FFFF'},{n:'Beige',h:'#F5F5DC'},{n:'Bisque',h:'#FFE4C4'},{n:'Black',h:'#000000'},{n:'BlanchedAlmond',h:'#FFEBCD'},{n:'Blue',h:'#0000FF'},{n:'BlueViolet',h:'#8A2BE2'},{n:'Brown',h:'#A52A2A'},{n:'BurlyWood',h:'#DEB887'},{n:'CadetBlue',h:'#5F9EA0'},{n:'Chartreuse',h:'#7FFF00'},{n:'Chocolate',h:'#D2691E'},{n:'Coral',h:'#FF7F50'},{n:'CornflowerBlue',h:'#6495ED'},{n:'Cornsilk',h:'#FFF8DC'},{n:'Crimson',h:'#DC143C'},{n:'Cyan',h:'#00FFFF'},{n:'DarkBlue',h:'#00008B'},{n:'DarkCyan',h:'#008B8B'},{n:'DarkGoldenRod',h:'#B8860B'},{n:'DarkGray',h:'#A9A9A9'},{n:'DarkGreen',h:'#006400'},{n:'DarkKhaki',h:'#BDB76B'},{n:'DarkMagenta',h:'#8B008B'},{n:'DarkOliveGreen',h:'#556B2F'},{n:'DarkOrange',h:'#FF8C00'},{n:'DarkOrchid',h:'#9932CC'},{n:'DarkRed',h:'#8B0000'},{n:'DarkSalmon',h:'#E9967A'},{n:'DarkSeaGreen',h:'#8FBC8F'},{n:'DarkSlateBlue',h:'#483D8B'},{n:'DarkSlateGray',h:'#2F4F4F'},{n:'DarkTurquoise',h:'#00CED1'},{n:'DarkViolet',h:'#9400D3'},{n:'DeepPink',h:'#FF1493'},{n:'DeepSkyBlue',h:'#00BFFF'},{n:'DimGray',h:'#696969'},{n:'DodgerBlue',h:'#1E90FF'},{n:'FireBrick',h:'#B22222'},{n:'FloralWhite',h:'#FFFAF0'},{n:'ForestGreen',h:'#228B22'},{n:'Fuchsia',h:'#FF00FF'},{n:'Gainsboro',h:'#DCDCDC'},{n:'GhostWhite',h:'#F8F8FF'},{n:'Gold',h:'#FFD700'},{n:'GoldenRod',h:'#DAA520'},{n:'Gray',h:'#808080'},{n:'Green',h:'#008000'},{n:'GreenYellow',h:'#ADFF2F'},{n:'HoneyDew',h:'#F0FFF0'},{n:'HotPink',h:'#FF69B4'},{n:'IndianRed',h:'#CD5C5C'},{n:'Indigo',h:'#4B0082'},{n:'Ivory',h:'#FFFFF0'},{n:'Khaki',h:'#F0E68C'},{n:'Lavender',h:'#E6E6FA'},{n:'LavenderBlush',h:'#FFF0F5'},{n:'LawnGreen',h:'#7CFC00'},{n:'LemonChiffon',h:'#FFFACD'},{n:'LightBlue',h:'#ADD8E6'},{n:'LightCoral',h:'#F08080'},{n:'LightCyan',h:'#E0FFFF'},{n:'LightGoldenRodYellow',h:'#FAFAD2'},{n:'LightGray',h:'#D3D3D3'},{n:'LightGreen',h:'#90EE90'},{n:'LightPink',h:'#FFB6C1'},{n:'LightSalmon',h:'#FFA07A'},{n:'LightSeaGreen',h:'#20B2AA'},{n:'LightSkyBlue',h:'#87CEFA'},{n:'LightSlateGray',h:'#778899'},{n:'LightSteelBlue',h:'#B0C4DE'},{n:'LightYellow',h:'#FFFFE0'},{n:'Lime',h:'#00FF00'},{n:'LimeGreen',h:'#32CD32'},{n:'Linen',h:'#FAF0E6'},{n:'Magenta',h:'#FF00FF'},{n:'Maroon',h:'#800000'},{n:'MediumAquaMarine',h:'#66CDAA'},{n:'MediumBlue',h:'#0000CD'},{n:'MediumOrchid',h:'#BA55D3'},{n:'MediumPurple',h:'#9370DB'},{n:'MediumSeaGreen',h:'#3CB371'},{n:'MediumSlateBlue',h:'#7B68EE'},{n:'MediumSpringGreen',h:'#00FA9A'},{n:'MediumTurquoise',h:'#48D1CC'},{n:'MediumVioletRed',h:'#C71585'},{n:'MidnightBlue',h:'#191970'},{n:'MintCream',h:'#F5FFFA'},{n:'MistyRose',h:'#FFE4E1'},{n:'Moccasin',h:'#FFE4B5'},{n:'NavajoWhite',h:'#FFDEAD'},{n:'Navy',h:'#000080'},{n:'OldLace',h:'#FDF5E6'},{n:'Olive',h:'#808000'},{n:'OliveDrab',h:'#6B8E23'},{n:'Orange',h:'#FFA500'},{n:'OrangeRed',h:'#FF4500'},{n:'Orchid',h:'#DA70D6'},{n:'PaleGoldenRod',h:'#EEE8AA'},{n:'PaleGreen',h:'#98FB98'},{n:'PaleTurquoise',h:'#AFEEEE'},{n:'PaleVioletRed',h:'#DB7093'},{n:'PapayaWhip',h:'#FFEFD5'},{n:'PeachPuff',h:'#FFDAB9'},{n:'Peru',h:'#CD853F'},{n:'Pink',h:'#FFC0CB'},{n:'Plum',h:'#DDA0DD'},{n:'PowderBlue',h:'#B0E0E6'},{n:'Purple',h:'#800080'},{n:'RebeccaPurple',h:'#663399'},{n:'Red',h:'#FF0000'},{n:'RosyBrown',h:'#BC8F8F'},{n:'RoyalBlue',h:'#4169E1'},{n:'SaddleBrown',h:'#8B4513'},{n:'Salmon',h:'#FA8072'},{n:'SandyBrown',h:'#F4A460'},{n:'SeaGreen',h:'#2E8B57'},{n:'SeaShell',h:'#FFF5EE'},{n:'Sienna',h:'#A0522D'},{n:'Silver',h:'#C0C0C0'},{n:'SkyBlue',h:'#87CEEB'},{n:'SlateBlue',h:'#6A5ACD'},{n:'SlateGray',h:'#708090'},{n:'Snow',h:'#FFFAFA'},{n:'SpringGreen',h:'#00FF7F'},{n:'SteelBlue',h:'#4682B4'},{n:'Tan',h:'#D2B48C'},{n:'Teal',h:'#008080'},{n:'Thistle',h:'#D8BFD8'},{n:'Tomato',h:'#FF6347'},{n:'Turquoise',h:'#40E0D0'},{n:'Violet',h:'#EE82EE'},{n:'Wheat',h:'#F5DEB3'},{n:'White',h:'#FFFFFF'},{n:'WhiteSmoke',h:'#F5F5F5'},{n:'Yellow',h:'#FFFF00'},{n:'YellowGreen',h:'#9ACD32'}];
+function render(){const q=document.getElementById('search').value.toLowerCase();const grid=document.getElementById('grid');
+let html='';COLORS.forEach(c=>{if(q&&!c.n.toLowerCase().includes(q))return;html+='<div style="padding:8px;border-radius:6px;border:1px solid #334155;cursor:pointer;" onclick="copyColor(\''+c.h+'\')" title="点击复制 '+c.h+'"><div style="height:24px;border-radius:4px;background:'+c.h+';margin-bottom:4px;" class="swatch"></div><div style="font-size:11px;color:#94a3b8;">'+c.n+'</div><div style="font-size:10px;color:#475569;">'+c.h+'</div></div>';});
+grid.innerHTML=html||'<div style="color:#64748b;grid-column:1/-1;text-align:center;padding:24px;">未找到匹配颜色</div>';}
+function copyColor(h){navigator.clipboard.writeText(h);showToast('已复制: '+h);}
+window.onload=render;
+</script>
+
+<div class="footer">
+<div style="color:#475569;font-size:12px;margin-bottom:4px;">💖 如果这个工具有帮助，欢迎支持开发</div>
+<div class="addr" onclick="copyAddr()">USDT (TRC-20): TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH</div>
+<div style="color:#334155;font-size:11px;margin-top:8px;">工具集 · 开源免费</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+function copyAddr(){navigator.clipboard.writeText('TBzeBcdaEGvS2FLnW7wjHuN19RqUaVpFHH').then(()=>{const t=document.getElementById('toast');t.textContent='✅ 地址已复制';t.style.display='block';setTimeout(()=>t.style.display='none',2000);});}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2000);}
+</script>
+
+</div>
+</body>
+</html>
